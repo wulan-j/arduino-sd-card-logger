@@ -22,8 +22,8 @@ void loop() {
   mySensorData = SD.open("data.txt", FILE_WRITE); //open file on the SD card to write to , max 8 character + 3 for extension
 
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
+//  if (currentMillis - previousMillis >= interval) {
+  //  previousMillis = currentMillis;
 
 
     if (mySensorData) { //onely do these tings if the data file opend sucessfully
@@ -35,10 +35,11 @@ void loop() {
       mySensorData.println("time in miliseconds"); // write text time in miliseconds to sd card
       mySensorData.close(); //close the file
     }
-  }
+ //}
 
   else {
     Serial.println("error opening data.txt");
   }
 
 }
+
