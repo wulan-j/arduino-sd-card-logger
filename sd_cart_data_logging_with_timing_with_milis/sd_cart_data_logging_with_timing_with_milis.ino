@@ -16,15 +16,18 @@ void setup() {
 
  // pinMode(10, OUTPUT);// reseve pin 10, even wheile we dont use is.
   SD.begin(chipSelect); // initilaize the SD card with chipselect to pin 4
+  
+  mySensorData = SD.open("data.txt", FILE_WRITE); //open file on the SD card to write to , max 8 character + 3 for extension
+  if (!mySensorData) {
+    Serial.println("error opening data.txt");
+  }
 }
 void loop() {
 
-  mySensorData = SD.open("data.txt", FILE_WRITE); //open file on the SD card to write to , max 8 character + 3 for extension
-
+ 
   unsigned long currentMillis = millis();
-//  if (currentMillis - previousMillis >= interval) {
-  //  previousMillis = currentMillis;
-
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
 
     if (mySensorData) { //onely do these tings if the data file opend sucessfully
 
@@ -33,13 +36,7 @@ void loop() {
       mySensorData.print(currentMillis); //print currentmilis to sd card
       mySensorData.print(","); // write comma to sd card
       mySensorData.println("time in miliseconds"); // write text time in miliseconds to sd card
-      mySensorData.close(); //close the file
+      mySensorData.flush(); // write data to file
     }
- //}
-
-  else {
-    Serial.println("error opening data.txt");
   }
-
 }
-
